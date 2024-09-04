@@ -1,0 +1,36 @@
+version: 0.2
+
+env:
+  variables:
+    PULUMI_ACCESS_TOKEN: ${PULUMI_ACCESS_TOKEN}
+    PULUMI_STACK: dev
+  parameter-store:
+    PULUMI_ACCESS_TOKEN: /jlgore/pulumi-access-token
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - npm install -g pulumi
+      - npm install
+
+  pre_build:
+    commands:
+      - echo "Logging in to Pulumi"
+      - pulumi login
+      - echo "Selecting Pulumi stack $PULUMI_STACK"
+      - pulumi stack select $PULUMI_STACK
+
+  build:
+    commands:
+      - echo "Running Pulumi up"
+      - pulumi up --yes
+
+  post_build:
+    commands:
+      - echo "Pulumi up completed on `date`"
+
+artifacts:
+  files:
+    - '**/*'

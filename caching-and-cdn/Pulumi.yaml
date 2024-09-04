@@ -3,7 +3,7 @@ runtime:
   name: nodejs
   options:
     packagemanager: npm
-description: A minimal AWS TypeScript Pulumi program
+description: A minimal AWS TypeScript Pulumi program deploying a redis cluster and a cloudfront backed api gateway.
 config:
   pulumi:tags:
     value:
